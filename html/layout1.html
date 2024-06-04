@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layout1</title>
+    <style>
+        * {
+        }
+        .cls {
+            width: 100px;
+            height: 100px;
+            display:inline;
+        }
+        #wrapper {
+            position: relative;
+            left : 50px;
+            top :  50px;
+        }
+        #div1 {
+            background-color: yellow;
+            float:left;
+        }
+        #div2 {
+            background-color: red;
+            float: left;
+            position: relative;
+            left : 100px;
+        }
+        #div3 {
+            background-color: green;
+            float: left;
+            clear : both;
+        }
+        #div4 {
+            background-color: skyblue;
+            float: left;
+            position: relative;
+            left : 100px;
+        }
+        #div5 {
+            background-color: purple;
+            float:left;
+            position: absolute;
+            left : 100px;
+            top : 50px
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div id = "wrapper">
+        <div id = "div1" class="cls">
+            div1
+        </div>
+        <div id = "div2" class="cls">
+            div2
+        </div>
+        <div id = "div3" class="cls">
+            div3
+        </div>
+        <div id = "div4" class="cls">
+            div4
+        </div>
+
+        <div id = "div5" class="cls">
+            div5
+        </div>
+    </div>
+</body>
+</html>

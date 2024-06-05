@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+ul li {
+    display: inline-block;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #ccc;
+    
+}
+p {
+    text-align: center;
+}
+input[type="text"] {
+    width: 450px;
+}
+.title {
+    font-size: 48px;
+    text-align: center;
+}
+#loginform{
+    border: #ccc;
+    width : 200px;
+    margin : 0px auto 0px auto;
+}
+.buttons{
+    text-align: center;
+}
+.buuton1{
+    text-align: center;
+    margin-right : 500px;
+
+}

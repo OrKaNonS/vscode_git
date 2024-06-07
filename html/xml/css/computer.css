@@ -1,0 +1,17 @@
+computer {
+    width: 800px;
+    height: 150px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid #999;
+    display: block;
+}
+cpu {
+    background-color: #83aeb9;
+}
+memory {
+    background-color: #1b28a3;
+}
+gpu {
+    background-color: #b47bb6;
+}

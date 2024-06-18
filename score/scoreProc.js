@@ -1,6 +1,7 @@
 // 성적처리 스크립트
 
-const totalPersonArr();
+const totalPersonArr = [];
+let first = false;
 
 $(function() {
 
@@ -34,21 +35,27 @@ function init() {
 function getPersonArr(newPerson) {
 
     // 3명의 성적 객체 생성_3명 추가하는 기능이 처음에 한번만 실행되게 수정 필요_안하면 추가시 오류남.
-    // 상태변수 boolean 활용(true 에서 한번 실행되면 false가 되게)
-    const hongScore = new Score(100, 90, 80);
-    const kangScore = new Score(90, 90, 70);
-    const leeScore = new Score(60, 80, 70);
+    // 상태변수 boolean 활용(false 에서 한번 실행되면 true가 되게)
 
-    // 3명의 학생 객체 생성 _ 
-    const hong = new Person("홍길동", hongScore);
-    const kang = new Person("강감찬", kangScore);
-    const lee = new Person("이순신", leeScore);
+    if(!first) {
+        const hongScore = new Score(100, 90, 80);
+        const kangScore = new Score(90, 90, 70);
+        const leeScore = new Score(60, 80, 70);
 
-    // newPerson이 있으면 newPerson을 포함한 personArr를 리턴
+        // 3명의 학생 객체 생성 _ 
+        const hong = new Person("홍길동", hongScore);
+        const kang = new Person("강감찬", kangScore);
+        const lee = new Person("이순신", leeScore);
 
-    totalPersonArr.push(hong);
-    totalPersonArr.push(kang);
-    totalPersonArr.push(lee);
+        // newPerson이 있으면 newPerson을 포함한 personArr를 리턴
+
+        totalPersonArr.push(hong);
+        totalPersonArr.push(kang);
+        totalPersonArr.push(lee);
+
+        first = true;
+    
+    }
     
     if(newPerson) {
         personArr[personArr.length] = newPerson;

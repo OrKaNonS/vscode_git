@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timer animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src = 'timeranimation2.js'></script>
+    <style>
+        #box {
+            width: 100%; height: 600px; border: 1px solid #333;
+            line-height: 200px
+        }        
+        img {
+            width: 200px; height: 200px;
+            display: inline-block; position: absolute;
+        }
+        p { text-align:center }
+        input[type='button']{ width: 120px; height: 35px; }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="box">
+            <img id="dog" src="dog.png" />
+        </div>
+        <p>
+            <input id="moveToLeft" type="button"  value="MOVE TO LEFT">
+            <input id="pause" type="button"  value="PAUSE">
+            <input id="moveToRight" type="button"  value="MOVE TO RIGHT">
+            <input id="moveToUp" type="button"  value="MOVE TO UP">
+            <input id="moveToDown" type="button"  value="MOVE TO DOWN">
+
+        </p>
+    </div>
+</body>
+</html>

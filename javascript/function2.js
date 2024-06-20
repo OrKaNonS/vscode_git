@@ -6,7 +6,7 @@
     const b = 5;
     console.log(3+5);
 }());
-
+ㅛ
 (function(a, b){
     console.log(a + b);
 } (1, 2));
@@ -235,7 +235,7 @@ console.log(users1);
 const users2 = response.data.filter(function(obj){
     if(obj.company.name.includes("Romaguera"))
         return obj;
-})
+    })
 console.log(users2);
 
 // 3. "Gwenborough" 도시에 사는 모든 사용자의 id의 합계를 출력 - reduce
@@ -243,27 +243,27 @@ const users3 = response.data.reduce(function(acc, obj){
     if(obj.address.city == "Gwenborough"){
         return acc + obj.id; 
     } else {return acc}
-}, 0);
+    }, 0);
 console.log(users3);
 
 // 4. id가 홀수인 사용자들 중에 lat과 lng의 합이 0 이상인 사용자들의 배열 - filter
 const users4 = response.data.filter(function(obj){
-    if(obj.id % 2 == 1 &&
-        (parseFloat(obj.address.geo.lat) + parseFloat(obj.address.geo.lng)) >= 0){
+    if(obj.id % 2 == 1
+        && (parseFloat(obj.address.geo.lat) + parseFloat(obj.address.geo.lng)) >= 0){
             return obj;
         }
-})
+    })
 console.log(users4);
 
 // 5. id가 홀수인 사용자들 중에 이메일주소의 @문자 뒤의 글자가 4이상인
 //    사용자들 중에서 zipcode가 7글자 이하인 사용자들의 배열 - filter
 
 const users5 = response.data.filter(function(obj){
-    if(obj.id % 2 == 1 &&
-        obj.email.substring(obj.email.indexOf('@')).length >= 4 &&
-            obj.address.zipcode.length <=7 )
-                return obj;
-            })
+    if(obj.id % 2 == 1
+        && obj.email.substring(obj.email.indexOf('@')).length >= 4
+        && obj.address.zipcode.length <=7 )
+    return obj;
+    })
 console.log(users5);
-})
 
+})

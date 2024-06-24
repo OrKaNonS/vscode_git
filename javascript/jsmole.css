@@ -9,10 +9,14 @@ body {
     text-align: center;
 }
 
+#nickname {
+    margin-bottom: 10px;
+}
+
 #gameboard {
     display: grid;
     grid-template-columns: 100px 100px 100px;
-    gap : 5px;
+    gap: 5px;
     margin: auto;
     justify-content: center;
 }
@@ -23,28 +27,73 @@ body {
     background-color: #cccccc;
     border: 1px solid #333;
     position: relative;
-    
+    overflow: hidden;
+}
+
+.mole, .super-mole {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: -100px;
+    transition: bottom 0.2s ease-in;
 }
 
 .mole {
-    width: 100px;
-    height: 100px;
     background-image: url('mole.png');
-    position: absolute; 
 }
 
-/* @keyframes graphup {
-    from {clip-path: inset(100% 0 0 0);;} 
+.super-mole {
+    background-image: url('super-mole.png');
+}
 
-    to {clip-path: inset(0 0 0 0);;}
-} */
+.mole.up, .super-mole.up {
+    bottom: 0;
+}
+
+#difficulty {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.difficulty-btn {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
 
 #scoreboard {
     margin: 20px;
 }
 
 #startbutton {
-    margin-top : 20px;
-    padding: 20px 20px;
-    font-size: 20px;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #44a647;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#startbutton:hover {
+    background-color: #45a049;
+}
+
+#recordList {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+#recordList th, #recordList td {
+    border: 1px solid #ffffff;
+    padding: 8px;
+    text-align: center;
+}
+
+#recordList th {
+    background-color: #ffffff;
 }

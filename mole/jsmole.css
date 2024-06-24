@@ -1,0 +1,99 @@
+body {
+    font-family: Arial;
+    height: 100vh;
+    background-color: #ffffff;
+    margin: 0;
+}
+
+#wrapper {
+    text-align: center;
+}
+
+#nickname {
+    margin-bottom: 10px;
+}
+
+#gameboard {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    gap: 5px;
+    margin: auto;
+    justify-content: center;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #cccccc;
+    border: 1px solid #333;
+    position: relative;
+    overflow: hidden;
+}
+
+.mole, .super-mole {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: -100px;
+    transition: bottom 0.2s ease-in;
+}
+
+.mole {
+    background-image: url('mole.png');
+}
+
+.super-mole {
+    background-image: url('super-mole.png');
+}
+
+.mole.up, .super-mole.up {
+    bottom: 0;
+}
+
+#difficulty {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.difficulty-btn {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#scoreboard {
+    margin: 20px;
+}
+
+#startbutton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #44a647;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#startbutton:hover {
+    background-color: #45a049;
+}
+
+#recordList {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+#recordList th, #recordList td {
+    border: 1px solid #ffffff;
+    padding: 8px;
+    text-align: center;
+}
+
+#recordList th {
+    background-color: #ffffff;
+}

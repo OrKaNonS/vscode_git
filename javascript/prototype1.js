@@ -29,7 +29,7 @@ console.log(Person.prototype.__proto__ === Object.prototype); // true
 
 // Person의 prototype에 getName이라는 프라퍼티 메소드 확장
 Person.prototype.getName = function() {
-    return this.name;
+    return this.name; 
 }
 
 // prototype 프라퍼티를 통한 프라퍼티 확장

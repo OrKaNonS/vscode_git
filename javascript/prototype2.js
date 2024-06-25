@@ -9,7 +9,7 @@ Dog.prototype.say = function() {
 
 function Cat(name, sound) {
     this.name = name;
-    this.sound = sound;
+    this.sound = sound; 
 }
 
 Cat.prototype.say = function() {

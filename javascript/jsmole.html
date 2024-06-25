@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -48,3 +49,55 @@
     </div>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두더지잡기</title>
+    <link rel="stylesheet" href="jsmole.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="jsmole.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <h1>두더지잡기</h1>
+        <div id="scoreboard">
+            <span id="score">Score: 0</span>
+        </div>
+        <div>
+            <input id="nickname" type="text" placeholder="닉네임을 입력하세요">
+        </div>
+        <div id="gameboard">
+            <div id="0" class="cell"></div>
+            <div id="1" class="cell"></div>
+            <div id="2" class="cell"></div>
+            <div id="3" class="cell"></div>
+            <div id="4" class="cell"></div>
+            <div id="5" class="cell"></div>
+            <div id="6" class="cell"></div>
+            <div id="7" class="cell"></div>
+            <div id="8" class="cell"></div>
+        </div>
+        <div id="difficulty" style="display: none;">
+            <button class="difficulty-btn" spd-min="1000" spd-max="2000">하수</button>
+            <button class="difficulty-btn" spd-min="500" spd-max="1200">중수</button>
+            <button class="difficulty-btn" spd-min="300" spd-max="1000">고수</button>
+        </div>
+        <input id="startbutton" type="button" value="Start Game">
+        <table id="recordList">
+            <thead>
+                <tr>
+                    <th>닉네임</th>
+                    <th>점수</th>
+                    <th>시간</th>
+                </tr>
+            </thead>
+            <tbody id="recordList"></tbody>
+        </table>
+    </div>
+</body>
+</html>
+>>>>>>> 274cb2bd6dea604e29a7d9ca4015f8291886718e

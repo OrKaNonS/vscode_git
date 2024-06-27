@@ -78,12 +78,14 @@ $(() => {
     });
 
     // 매장 클릭 이벤트
-        $('#shoplist').on('click', 'tr', (event) => {
-            const thisRow = $(event.currentTarget).closest('tr');
-            const currentShno = thisRow.data('shno');
-            console.log(currentShno);
-            printStockList(currentShno);
-        });
+    $('#shoplist').on('click', 'tr', (event) => {
+        const thisRow = $(event.currentTarget).closest('tr');
+        currentShno = thisRow.data('shno');
+        const showShopName = thisRow.find('td:nth-child(2)').text();
+        $('#stshopname').val(showShopName);
+        console.log(currentShno);
+        printStockList(currentShno);
+    });
     
 })
 
@@ -125,16 +127,18 @@ const addShop = () => {
 };
 
 // 제품등록
-const addStock = (currentShno) => {
-    if(currentShno === null) {
+const addStock = () => {
+    if (currentShno === null) {
         alert('매장을 선택해주세요');
         return;
-    } else {
-    const stockArr = getStockList() || [];
-    stockArr.push(new Stock(getNextStockSeq(), $('#stname').val(), $('#stamt').val(), $('#stindate').val(), new Date().toLocaleString(), $('#stock.shno')));
-    localStorage.setItem('stockList', JSON.stringify(stockArr));
     }
-}
+    const stockArr = getStockList() || [];
+    stockArr.push(new Stock(getNextStockSeq(), $('#stname').val(), $('#stamt').val(), $('#stindate').val(), new Date().toLocaleString(), currentShno));
+    localStorage.setItem('stockList', JSON.stringify(stockArr));
+    printStockList(currentShno);
+    shopTotalStock();
+};
+
 
 // 매장번호 시퀀스
 const getNextShopSeq = () => {
@@ -145,7 +149,8 @@ const getNextShopSeq = () => {
 
 // 제품번호 시퀀스
 const getNextStockSeq = () => {
-    const nextStockSeq = Number(localStorage.getItem('stockSeq')) + 1;
+    const stockList = getStockList();
+    const nextStockSeq = stockList.length ? Math.max(...stockList.map(stock => stock.stno)) + 1 : 1;
     localStorage.setItem('stockSeq', nextStockSeq);
     return nextStockSeq;
 };
@@ -154,13 +159,16 @@ const getNextStockSeq = () => {
 const printShopList = () => {
     $('#shoplist tbody').empty();
     const shopList = getShopList() || [] ;
+    const stockList = getStockList() || [];
     const shopListLeng = shopList.length;
     for(let i=0 ; i < shopListLeng; i++) {
         const shop = shopList[i];
+        const totalStock = stockList.filter(stock => stock.shno === shop.shno) // 선택한 매장 shno filter
+                            .reduce((sum, stock) => sum + Number(stock.stamt), 0);  // sum : 총값, stock : 현재값 , Number(stock.stamt) 스택 수량을 숫자로 변경, 0은 초기값
         const tr = `<tr data-shno="${shop.shno}">
         <td>${shop.shno}</td>
         <td>${shop.shname}</td>
-        <td>${shop.shtotst}</td>
+        <td>${totalStock}</td>
         <td>
             <input type='button' value='수정' class='editShopBtn' data-index='${i}' />
         </td>
@@ -194,17 +202,17 @@ const editShop = (index, newName) => {
 // 제품리스트 출력
 const printStockList = (currentShno) => {
     $('#stocklist tbody').empty();
-    const stockList = getStockList() || [] ;
+    const stockList = getStockList() || [];
     const filterStockList = stockList.filter(stock => stock.shno === currentShno);
     const stockListLeng = filterStockList.length;
-    for(let i=0 ; i < stockListLeng; i++) {
+    for (let i = 0; i < stockListLeng; i++) {
         const stock = filterStockList[i];
         const tr = `<tr>
         <td>${stock.stno}</td>
         <td>${stock.stname}</td>
         <td>${stock.stamt}</td>
         <td>${stock.stindate}</td>
-        <td>${new Date().toLocaleString()}</td>
+        <td>${stock.strgdate}</td>
         <td>
             <input type='button' value='수정' class='editStockBtn' data-index='${i}' />
         </td>
@@ -214,31 +222,63 @@ const printStockList = (currentShno) => {
     </tr>`;
     $('#stocklist tbody').append(tr) 
     }
-}
+};
 
 // shopList 삭제
 const deleteStock = (index) => {
     let stockArr = getStockList();
-    stockArr.splice(index, 1);
-    localStorage.setItem('stockList', JSON.stringify(stockArr));
-    printStockList();
+    const filterStockArr = stockArr.filter(stock => stock.shno === currentShno); // 선택한 매장 filter
+    filterStockArr.splice(index, 1);
+    // filter된 제품의 번호 재선정_어뚱하게 삭제되어 번호 재선정 후 해당 배열 + 선택된 매장 외의 shno를 합하여 새로운 배열에 넣는다.
+    for (let i = 0; i < filterStockArr.length; i++) {
+        filterStockArr[i].stno = i + 1;
+    }
+    const updatedStockArr = stockArr.filter(stock => stock.shno !== currentShno).concat(filterStockArr);
+    localStorage.setItem('stockList', JSON.stringify(updatedStockArr));
+    printStockList(currentShno);
+    shopTotalStock();
 };
 
 // stockList 수정
 const editStock = (index, newStName, newStAmt, newStindate) => {
     const stockArr = getStockList();
-    if (newStName !== null && newStName.trim() !== "") { // 이름이 없거나 공백만 있을 경우
-        stockArr[index].stname = newStName;
+    const filterStockArr = stockArr.filter(stock => stock.shno === currentShno);
+
+    if (newStName && newStName.trim()) {
+        filterStockArr[index].stname = newStName;
     }
-    if (newStAmt !== null && newStAmt.trim() !== "") { // 이름이 없거나 공백만 있을 경우
-        stockArr[index].stamt = newStAmt;
+
+    if (newStAmt && newStAmt.trim()) {
+        filterStockArr[index].stamt = newStAmt;
     }
-    if (newStindate !== null && newStindate.trim() !== "") { // 이름이 없거나 공백만 있을 경우
-        stockArr[index].stindate = newStindate;
+    
+    if (newStindate && newStindate.trim()) {
+        filterStockArr[index].stindate = newStindate;
     }
-    localStorage.setItem('stockList', JSON.stringify(stockArr));
-    printStockList();
+
+    for (let i = 0; i < filterStockArr.length; i++) {
+        filterStockArr[i].stno = i + 1;
+    }
+
+    const updatedStockArr = stockArr.filter(stock => stock.shno !== currentShno).concat(filterStockArr);
+    localStorage.setItem('stockList', JSON.stringify(updatedStockArr));
+    printStockList(currentShno);
+    shopTotalStock();
 };
+
+// 매장 재고 총 수량
+const shopTotalStock = () => {
+    const shopList = getShopList();
+    const stockList = getStockList();
+    for (let i = 0; i < shopList.length; i++) {
+        const shop = shopList[i];
+        const totalStock = stockList.filter(stock => stock.shno === shop.shno) // 선택한 매장 shno filter
+                            .reduce((sum, stock) => sum + Number(stock.stamt), 0);  // sum : 총값, stock : 현재값 , Number(stock.stamt) 스택 수량을 숫자로 변경, 0은 초기값
+        shop.shtotst = totalStock;
+    }
+    localStorage.setItem('shopList', JSON.stringify(shopList));
+    printShopList();
+}
 
 
 

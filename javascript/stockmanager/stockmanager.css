@@ -20,7 +20,7 @@ input[type='button'] {
 }
 
 #wrapper {
-    width: 820px;
+    width: 920px;
     height: 600px;
 }
 
@@ -44,22 +44,22 @@ input[type='button'] {
 .list table, .list table th, .list table td {
     border: 1px solid #999;
     border-collapse: collapse;
-    
-
 }
 
 #shoplist {
     width: 278px;
 }
+
 #shoplist table {
     width: 278px;
 }
 
 #stocklist {
-    width: 493px;
+    width: 593px;
 }
+
 #stocklist table {
-    width: 493px;
+    width: 593px;
 }
 
 #shoplist p, #stocklist p {
@@ -76,4 +76,8 @@ input[type='button'] {
 
 #stamt {
     width: 70px;
+}
+
+#stshopname {
+    width : 90px;
 }

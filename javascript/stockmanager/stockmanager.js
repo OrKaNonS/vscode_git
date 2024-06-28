@@ -241,9 +241,15 @@ const deleteStock = (index) => {
     const filterStockArr = stockArr.filter(stock => stock.shno === currentShno); // 선택한 매장 filter
     filterStockArr.splice(index, 1);
     // filter된 제품의 번호 재선정_어뚱하게 삭제되어 번호 재선정 후 해당 배열 + 선택된 매장 외의 shno를 합하여 새로운 배열에 넣는다.
+
     // for (let i = 0; i < filterStockArr.length; i++) {
     //     filterStockArr[i].stno = i + 1;
     // }
+
+    for (let i = 0; i < filterStockArr.length; i++) {
+        filterStockArr[i].stno = i + 1;
+    }
+
     const updatedStockArr = stockArr.filter(stock => stock.shno !== currentShno).concat(filterStockArr);
     localStorage.setItem('stockList', JSON.stringify(updatedStockArr));
     printStockList(currentShno);

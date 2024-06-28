@@ -6,6 +6,7 @@
     <title>재고관리프로그램 v0.1</title>
     <link rel="stylesheet" href="stockmanager.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="Shop.js"></script>
     <script src="Stock.js"></script>
     <script src="stockmanager.js"></script>
@@ -37,6 +38,7 @@
         <div id="stocklist" class="list">
             <h2>재고목록</h2>
             <p>
+                <input id="stshopname" type="text" placeholder="매장명" readonly />&nbsp;
                 <input id="stname" type="text" placeholder="재고제품명" />&nbsp;
                 <input id="stamt" type="number" placeholder="재고수량" />&nbsp;
                 <input id="stindate" type="date" placeholder="입고일시" />&nbsp;

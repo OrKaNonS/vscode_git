@@ -9,7 +9,7 @@
 
 3. li 클릭시 content 보여주기
  - localStorage에서 메모리스트 가져온 후 출력       - printShopList(getShopList)
- - shopList 클릭 시 우측에 detail 보여주기         - showShopDetail(click)
+ - shopList 클릭 시 우측에 StockList 보여주기      - StockList(click)
 
 4. shopList 삭제 버튼 
  - 삭제버튼 클릭시 해당 shopList에서 삭제          - splice
@@ -50,31 +50,82 @@ $(() => {
     // 매장 삭제 버튼 이벤트 _ 이벤트 위임???
     $('#shoplist').on('click', '.deleteShopBtn', (e) => {
         const remove = $(e.target).data('index');
-        deleteShop(remove);
+        Swal.fire({
+            title: '정말 삭제하시겠습니까?',
+            text: "삭제된 매장은 복구할 수 없습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteShop(remove);
+                Swal.fire('삭제 완료', '매장이 성공적으로 삭제되었습니다.', 'success');
+            }
+        });
     });
 
     // 매장 수정 버튼 이벤트 _ 이벤트 위임???
     $('#shoplist').on('click', '.editShopBtn', (e) => {
-        const index = $(e.target).data('index');        
-        const newName = prompt("새 매장명을 입력하세요","");
-        editShop(index, newName);
+        const index = $(e.target).data('index');  
+        Swal.fire({
+            title: '새 매장명을 입력하세요',
+            input: 'text',
+            inputPlaceholder: '매장명'
+        }).then((result) => {
+            if (result.isConfirmed && result.value.trim() !== '') {
+                editShop(index, result.value.trim());
+                Swal.fire('수정 완료', '매장이 성공적으로 수정되었습니다.', 'success');
+            }
+        });
     });
 
 
     // 제품 삭제 버튼 이벤트 _ 이벤트 위임???
     $('#stocklist').on('click', '.deleteStockBtn', (e) => {
         const remove = $(e.target).data('index');
-        deleteStock(remove);
+        Swal.fire({
+            title: '정말 삭제하시겠습니까?',
+            text: "삭제된 제품은 복구할 수 없습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteStock(remove);
+                Swal.fire('삭제 완료', '제품이 성공적으로 삭제되었습니다.', 'success');
+            }
+        });
     });
 
     // 제품 수정 버튼 이벤트 _ 이벤트 위임???
     $('#stocklist').on('click', '.editStockBtn', (e) => {
         const index = $(e.target).data('index');
-        const newStName = prompt("새 제품명을 입력하세요","");
-        const newStAmt = prompt("변경된 수량을 입력하세요","");
-        const newStindate = prompt("변경된 입고일자를 입력하세요","");
-
-        editStock(index, newStName, newStAmt, newStindate );
+        Swal.fire({
+            title: '제품 정보를 수정하세요',
+            html:
+                '<input id="newStName" class="swal2-input" placeholder="새 제품명">' +
+                '<input id="newStAmt" type="number" class="swal2-input" placeholder="변경된 수량">' +
+                '<input id="newStindate" type="date" class="swal2-input" placeholder="변경된 입고일자">',
+            focusConfirm: false,
+            preConfirm: () => {
+                return {
+                    newStName: document.getElementById('newStName').value,
+                    newStAmt: document.getElementById('newStAmt').value,
+                    newStindate: document.getElementById('newStindate').value
+                };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                editStock(index, result.value.newStName, result.value.newStAmt, result.value.newStindate);
+                Swal.fire('수정 완료', '제품 정보가 성공적으로 수정되었습니다.', 'success');
+            }
+        });
     });
 
     // 매장 클릭 이벤트
@@ -246,9 +297,6 @@ const deleteStock = (index) => {
     //     filterStockArr[i].stno = i + 1;
     // }
 
-    for (let i = 0; i < filterStockArr.length; i++) {
-        filterStockArr[i].stno = i + 1;
-    }
 
     const updatedStockArr = stockArr.filter(stock => stock.shno !== currentShno).concat(filterStockArr);
     localStorage.setItem('stockList', JSON.stringify(updatedStockArr));

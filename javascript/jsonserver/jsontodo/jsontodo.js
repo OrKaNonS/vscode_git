@@ -18,6 +18,12 @@ Todo : tdno 번호, tdcontent 내용, tdregdate 등록일시, tdcompleted 완료
 할일검색 : GET http://localhost:3000/todos
 */
 
+$(() => {
+
+    printTodoList();
+
+});
+
 
 const requestTodo = function (method, url, payload) {
     const xhr = new XMLHttpRequest();
@@ -28,34 +34,42 @@ const requestTodo = function (method, url, payload) {
     xhr.send(payload);
 }
 
-$("#todoregBtn").on("click",() => {
+
+
+//Todo.json에 있는 목록을 가져와서 출력에 뿌려주기
+const printTodoList = () => {
+    $("#todoList").empty();
+    fetch('Todo.json')
+        .then(response => response.json())
+        .then(data => {
+            const todoList = data.todos;
+            const todoListLeng = todoList.length;
+            for (let i = 0; i < todoListLeng; i++) {
+                $("#todoList").append(
+                    `<li id='todo${i}'>
+                        <div class='todo-details'>
+                            <div class='todo-content'>${todoList[i].tdcontent}</div>
+                            <div class='todo-date'>${new Date(todoList[i].tdregdate).toLocaleString()}</div>
+                        </div>
+                        <input id='removeBtn-${todoList[i].id}' class='removeBtn' type='button' value='삭제'/>
+                    </li>`
+                );
+            }
+            todoList.forEach((todo) => {
+                $(`#removeBtn-${todo.id}`).click(() => {
+                    requestTodo("DELETE", `http://localhost:3000/todos/${todo.id}`, null, printTodoList);
+                });
+            });
+        })
+        .catch(error => console.error('Error loading todos:', error));
+};
+
+$("#todoregBtn").on("click", () => {
     const newTodo = new Todo(1, $('#tdContent').val(), new Date(), false);
     requestTodo("POST", "http://localhost:3000/todos", JSON.stringify(newTodo));
+
 });
 
-// $("#tododeleteBtn").on("click",() => {
-//         requestTodo("DELETE", "http://localhost:3000/index");
-// });
-
-console.log(Todo.id);
 
 
-// function showTodoList() {
-//     const todoList = Todo.JSON;
-//     const todoListLeng = todoList.length;
-//     for(let i=0 ; i<todoListLeng; i++) {
-//         $("#tdlist ul").append(
-//             "<li
-
-
-            
-
-//     )}
-
-
-// Todo.json에 있는 목록을 가져와서 출력에 뿌려주기
-// const printTodoList = () => {
-//     $('#tdList tbody').empty();
-
-// }
 

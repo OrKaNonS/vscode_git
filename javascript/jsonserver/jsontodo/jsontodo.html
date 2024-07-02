@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsontodo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script defer src="Todo.js"></script>
+    <script defer src="Todo.json"></script>
+    <script defer src="jsontodo.js"></script>
+    <link rel="stylesheet" href="jsontodo.css" />
+</head>
+<body>
+    <div id="wrapper" >
+        <div id="title">
+            <h1>TODO 스케줄러</h1>
+        </div>
+        <div id="todo등록" class="list1">
+            <h2>TODO 등록칸</h2>
+            <p>
+                <input type="text" id="tdContent" placeholder="할일을 적어주세요">
+                <input type="button" id="todoregBtn" value="등록">
+            </p>
+        </div>
+        <div id = "tdList" class="list2">
+            <h2>TODO List</h2>
+                <ul>
+                    <li>                        
+                    </li>
+                </ul>  
+        </div>
+    </div>    
+</body>
+</html>

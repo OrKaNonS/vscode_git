@@ -1,0 +1,12 @@
+{
+  "name": "jsontodo",
+  "version": "1.0.0",
+  "main": "jsontodo.js",
+  "scripts": {
+    "start": "json-server --watch Todo.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

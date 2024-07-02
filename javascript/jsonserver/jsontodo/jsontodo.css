@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    border: 1px solid #333;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+input[type='text'], input[type='number'], input[type='date'] {
+    height: 25px;
+}
+input[type='button'] {
+    height: 25px;
+    padding: 0 10px;
+}
+
+#wrapper {
+    width: 850px;
+    height: 800px;
+}
+
+#title {
+    color: white;
+    background-color: black;
+    padding: 10px 0;
+}
+
+.list1 { 
+    margin: 10px;
+    height: 200px;
+    overflow-x : auto;
+}
+
+.list2 { 
+    margin: 10px;
+    height: 500px;
+    overflow-x : auto;
+}
+
+.list h2 {
+    padding: 10px 0;
+    color: white;
+    background-color: gray;    
+}
+.list table, .list table th, .list table td {
+    border: 1px solid #999;
+    border-collapse: collapse;
+}
+
+#tdContent {
+    width: 730px;
+    height: 120px;
+    margin: 10px;
+}

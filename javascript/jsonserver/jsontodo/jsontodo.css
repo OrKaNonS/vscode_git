@@ -3,12 +3,9 @@
     padding: 0;
 }
 
-div {
-    border: 1px solid #333;
-}
-
 h1, h2 {
     text-align: center;
+    margin: 10px;
 }
 
 input[type='text'], input[type='number'], input[type='date'] {
@@ -22,24 +19,28 @@ input[type='button'] {
 #wrapper {
     width: 850px;
     height: 800px;
+    border: 1px solid #333;
 }
 
 #title {
     color: white;
     background-color: black;
     padding: 10px 0;
+    border: 1px solid #333;
 }
 
 .list1 { 
     margin: 10px;
     height: 200px;
     overflow-x : auto;
+    border: 1px solid #333;
 }
 
 .list2 { 
     margin: 10px;
     height: 500px;
     overflow-x : auto;
+    border: 1px solid #333;
 }
 
 .list h2 {
@@ -47,13 +48,16 @@ input[type='button'] {
     color: white;
     background-color: gray;    
 }
-.list table, .list table th, .list table td {
-    border: 1px solid #999;
-    border-collapse: collapse;
-}
 
 #tdContent {
     width: 730px;
-    height: 120px;
+    height: 60px;
+    margin: 10px;
+}
+
+#todoList{
+    border: 1px solid #333;    
+    width: 730px;
+    height: 480px;
     margin: 10px;
 }

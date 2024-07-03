@@ -20,29 +20,32 @@ Todo : tdno 번호, tdcontent 내용, tdregdate 등록일시, tdcompleted 완료
 
 $(() => {
 
-    printTodoList();
+    getTodo();
 
 });
 
 
-const requestTodo = function (method, url, payload) {
+const requestTodo = (method, url, payload, callback) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
-    if(payload){
-        xhr.setRequestHeader('content-type', 'application/json');
+    if (payload) {
+        xhr.setRequestHeader('Content-Type', 'application/json');
     }
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (callback) callback(response);
+            } else {
+                console.error(`${xhr.status} ${xhr.statusText}`);
+            }
+        }
     xhr.send(payload);
-}
-
+};
 
 
 //Todo.json에 있는 목록을 가져와서 출력에 뿌려주기
-const printTodoList = () => {
-    $("#todoList").empty();
-    fetch('Todo.json')
-        .then(response => response.json())
-        .then(data => {
-            const todoList = data.todos;
+const printTodoList = (todoList) => {
+    $("#todoList").empty();  
             const todoListLeng = todoList.length;
             for (let i = 0; i < todoListLeng; i++) {
                 $("#todoList").append(
@@ -57,19 +60,18 @@ const printTodoList = () => {
             }
             todoList.forEach((todo) => {
                 $(`#removeBtn-${todo.id}`).click(() => {
-                    requestTodo("DELETE", `http://localhost:3000/todos/${todo.id}`, null, printTodoList);
+                    requestTodo("DELETE", `http://localhost:3000/todos/${todo.id}`, null, getTodo);
                 });
             });
-        })
-        .catch(error => console.error('Error loading todos:', error));
-};
-
+        }
+        
+// 할일 등록
 $("#todoregBtn").on("click", () => {
     const newTodo = new Todo(1, $('#tdContent').val(), new Date(), false);
-    requestTodo("POST", "http://localhost:3000/todos", JSON.stringify(newTodo));
-
+    requestTodo("POST", "http://localhost:3000/todos", JSON.stringify(newTodo), getTodo);
 });
 
-
-
-
+//할일 목록
+const getTodo = () => {
+    requestTodo("GET", "http://localhost:3000/todos", null, printTodoList);
+}

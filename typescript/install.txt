@@ -1,0 +1,48 @@
+TS(타입스크립트) 파일을 JS(자바스크립트)파일로 실시간 변경되게 하기(watching?)
+
+* 필요도구
+- node.js
+- npm (node package manager)
+- web browser
+- IDE(like VScode)
+- VSCODE 플러그인
+  1) eslint 플러그인
+     파일 > 기본설정 > 설정 > eslint.dire 검색 >
+     settings.json 편집 < "eslint.workingDirectories" : [{"mode" : "auto"}] 추가
+  2) night owl 플러그인
+  3) material icon theme 플러그인
+  4) path intellisense 플러그인
+  5) todo highlight 플러그인
+
+  * npm 초기화 및 typescript 설치
+  - (터미널) npm init -y
+  - (터미널) npm install typescript -D
+
+  * tsconfig.json (타입스크립트 설정파일) 생성
+  {
+    "compilerOptions": {
+        "target": "es6",
+        "outDir": "./dist",
+        "module": "commonjs",
+        "strictNullChecks": true        
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules","dist"]
+  }
+
+  * 트랜스파일러 실행
+    1. 전체 ts(타입스크립트파일)을 js파일로 트랜스파일링
+    (터미널) tsc -w
+    2. 개별 ts파일을 js 파일로 트랜스파일링
+    (터미널) tsc ts파일명 -w (사용 X)
+    
+  * 환경변수  
+   - 고급시스템 - 환경변수 - 시스템변수 - path 편집 - 새로만들기 - D:\Microsoft VS Code\git\vscode_git\typescript\node_modules\.bin 추가
+
+   * VScode 관리자 권한으로 실행
+
+  *보안옵션
+    (터미널)
+    Get-ExecutionPolicy
+    Set-ExecutionPolicy RemoteSigned
+    

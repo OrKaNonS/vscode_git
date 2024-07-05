@@ -27,17 +27,20 @@ function registTodo(paramTodo) {
 // 수정
 function updateTodo(paramTodo) {
     const id = paramTodo.id;
+    // id에 해당하는 todo가 존재하면 
     if (isExistedTodo(id)) {
-        return [...deleteTodo(id), paramTodo];
+        // id에 해당하는 todo가 삭제된 배열과 수정할 데이터가 담긴
+        // todo를 합친 새로운 배열을 리턴
+        todos = [...deleteTodo(id), paramTodo];
     }
-    else {
-        return todos;
-    }
+    return todos;
 }
 // 삭제
 function deleteTodo(paramId) {
+    // id에 해당하는 todo가 존재하면
     if (isExistedTodo(paramId)) {
-        return todos.filter(todo => todo.id = paramId);
+        // id에 해당하지 않는 todo들만 가진 배열을 리턴
+        return todos.filter(todo => todo.id != paramId);
     }
     else {
         return todos;
@@ -45,6 +48,7 @@ function deleteTodo(paramId) {
 }
 // id 존재여부 확인
 function isExistedTodo(paramId) {
+    // id에 해당하는 존재여부가 있는지 확인
     return todos.some(todo => todo.id === paramId); // some = 1개라도 있으면 true
 }
 // 목록
@@ -56,5 +60,5 @@ console.log(getTodos());
 console.log(updateTodo({ id: 4, title: '운동하기', completed: false }));
 // 조회
 console.log(getTodo(4));
-// 삭제 
+//삭제 
 console.log(deleteTodo(4));

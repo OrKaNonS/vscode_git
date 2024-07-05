@@ -47,8 +47,8 @@ function updateTodo(paramTodo: Todo): Todo[] {
         // id에 해당하는 todo가 삭제된 배열과 수정할 데이터가 담긴
         // todo를 합친 새로운 배열을 리턴
         todos = [...deleteTodo(id), paramTodo];
-    } return todos;
-}
+    }  return todos;
+    }
 
 
 // 삭제

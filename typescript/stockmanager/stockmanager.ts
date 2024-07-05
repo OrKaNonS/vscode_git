@@ -1,6 +1,13 @@
+const {JSDOM} = require('jsdom');
+const windowObj = new JSDOM();
+const documentObj = new JSDOM('').window;
+global.document = documentObj.document;
+
+const $$ = require('jquery')(windowObj.window);
+
 let currentShno = null;
 
-$(() => {
+$$(() => {
     
 
     // localstorage 초기화
@@ -22,88 +29,52 @@ $(() => {
     printShopList();
 
     // 매장 삭제 버튼 이벤트 _ 이벤트 위임???
-    $('#shoplist').on('click', '.deleteShopBtn', (e) => {
+    $$('#shoplist').on('click', '.deleteShopBtn', (e) => {
         const remove = $(e.target).data('index');
-        Swal.fire({
-            title: '정말 삭제하시겠습니까?',
-            text: "삭제된 매장은 복구할 수 없습니다.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '삭제',
-            cancelButtonText: '취소'
-        }).then((result) => {
+        (result) => {
             if (result.isConfirmed) {
-                deleteShop(remove);
-                Swal.fire('삭제 완료', '매장이 성공적으로 삭제되었습니다.', 'success');
+                deleteShop(remove); 
             }
-        });
+        }
     });
+});
 
     // 매장 수정 버튼 이벤트 _ 이벤트 위임???
-    $('#shoplist').on('click', '.editShopBtn', (e) => {
+    $$('#shoplist').on('click', '.editShopBtn', (e) => {
         const index = $(e.target).data('index');  
-        Swal.fire({
-            title: '새 매장명을 입력하세요',
-            input: 'text',
-            inputPlaceholder: '매장명'
-        }).then((result) => {
+
+        (result) => {
             if (result.isConfirmed && result.value.trim() !== '') {
                 editShop(index, result.value.trim());
-                Swal.fire('수정 완료', '매장이 성공적으로 수정되었습니다.', 'success');
             }
-        });
+        }
     });
 
 
     // 제품 삭제 버튼 이벤트 _ 이벤트 위임???
-    $('#stocklist').on('click', '.deleteStockBtn', (e) => {
+    $$('#stocklist').on('click', '.deleteStockBtn', (e) => {
         const remove = $(e.target).data('index');
-        Swal.fire({
-            title: '정말 삭제하시겠습니까?',
-            text: "삭제된 제품은 복구할 수 없습니다.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '삭제',
-            cancelButtonText: '취소'
-        }).then((result) => {
+        (result) => {
             if (result.isConfirmed) {
                 deleteStock(remove);
-                Swal.fire('삭제 완료', '제품이 성공적으로 삭제되었습니다.', 'success');
             }
-        });
+        }
     });
+
 
     // 제품 수정 버튼 이벤트 _ 이벤트 위임???
-    $('#stocklist').on('click', '.editStockBtn', (e) => {
-        const index = $(e.target).data('index');
-        Swal.fire({
-            title: '제품 정보를 수정하세요',
-            html:
-                '<input id="newStName" class="swal2-input" placeholder="새 제품명">' +
-                '<input id="newStAmt" type="number" class="swal2-input" placeholder="변경된 수량">' +
-                '<input id="newStindate" type="date" class="swal2-input" placeholder="변경된 입고일자">',
-            focusConfirm: false,
-            preConfirm: () => {
-                return {
-                    newStName: document.getElementById('newStName').value,
-                    newStAmt: document.getElementById('newStAmt').value,
-                    newStindate: document.getElementById('newStindate').value
-                };
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                editStock(index, result.value.newStName, result.value.newStAmt, result.value.newStindate);
-                Swal.fire('수정 완료', '제품 정보가 성공적으로 수정되었습니다.', 'success');
-            }
-        });
-    });
+$$('#stocklist').on('click', '.editStockBtn', (e) => {
+    const index = $(e.target).data('index');
+    (result) => {
+        if (result.isConfirmed) {
+            editStock(index, result.value.newStName, result.value.newStAmt, result.value.newStindate);
+        }
+    }
+});
+
 
     // 매장 클릭 이벤트
-    $('#shoplist').on('click', 'tr', (event) => {
+    $$('#shoplist').on('click', 'tr', (event) => {
         const thisRow = $(event.currentTarget).closest('tr');
         currentShno = thisRow.data('shno');
         const showShopName = thisRow.find('td:nth-child(2)').text();
@@ -112,7 +83,7 @@ $(() => {
         printStockList(currentShno);
     });
     
-})
+
 
 // localstorage 초기화
 const initLocalStorage = () => {
@@ -134,21 +105,35 @@ const initLocalStorage = () => {
 
 // shopList 가져오는 함수
 const getShopList = () => {
-    const shopList = JSON.parse(localStorage.getItem('shopList')) || [];
-    return shopList;
+    const shopList = localStorage.getItem('shopList');
+    if(!shopList) {
+        throw new Error ('No saved shopList')
+    }
+    return JSON.parse(shopList);
 };
 
 // stockList 가져오는 함수
 const getStockList = () => {
-    const stockList = JSON.parse(localStorage.getItem('stockList')) || [];
-    return stockList;
+    const stockList = localStorage.getItem('stockList');
+    if(!stockList) {
+        throw new Error ('No saved stockList')
+    } else {
+    return JSON.parse(stockList);
+    }
 };
 
 //매장등록
 const addShop = () => {
-    const shopArr = getShopList() || [];
-    shopArr.push(new Shop(getNextShopSeq(), $('#shname').val(), 0));
-    localStorage.setItem('shopList', JSON.stringify(shopArr));
+    const shname = ($('#shname').val() as string) || ''; // as string 사용
+    const shno = Number($('#shno').val() as number) || 0; //  Number로 변환
+    if (!shname.trim() || shno <= 0) {
+        alert('유효하지 않은 매장 정보입니다.');
+        return;
+    }
+    const shopList = getShopList();
+    const newShop = new Shop(shno, shname, 0);
+    shopList.push(newShop);
+    localStorage.setItem('shopList', JSON.stringify(shopList));
 };
 
 // 제품등록
@@ -157,18 +142,27 @@ const addStock = () => {
         alert('매장을 선택해주세요');
         return;
     }
-    const stockArr = getStockList() || [];
-    stockArr.push(new Stock(getNextStockSeq(), $('#stname').val(), $('#stamt').val(), $('#stindate').val(), new Date().toLocaleString(), currentShno));
-    localStorage.setItem('stockList', JSON.stringify(stockArr));
+    const stname = ($('#stname').val() as string) || '';
+    const stamt = Number($('#stamt').val()) || 0; // Number로 변환하여 숫자로 처리
+    const stindat = ($('#stindat').val() as string) || '';
+
+    if (!stname.trim() || stamt < 0 || !stindat.trim()) {
+        alert('유효하지 않은 제품 정보입니다.');
+        return;
+    }
+    const stockList = getStockList();
+    const newStock = new Stock(0, stname, stamt, new Date(stindat), new Date(), currentShno);
+    stockList.push(newStock);
+
+    localStorage.setItem('stockList', JSON.stringify(stockList));
     printStockList(currentShno);
-    shopTotalStock();
 };
 
 
 // 매장번호 시퀀스
 const getNextShopSeq = () => {
     const nextShopSeq = Number(localStorage.getItem('shopSeq')) + 1;
-    localStorage.setItem('shopSeq', nextShopSeq);
+    localStorage.setItem('shopSeq', nextShopSeq.toString());
     return nextShopSeq;
 };
 
@@ -176,7 +170,7 @@ const getNextShopSeq = () => {
 const getNextStockSeq = () => {
     const stockList = getStockList();
     const nextStockSeq = stockList.length ? Math.max(...stockList.map(stock => stock.stno)) + 1 : 1;
-    localStorage.setItem('stockSeq', nextStockSeq);
+    localStorage.setItem('stockSeq', nextStockSeq.toString());
     return nextStockSeq;
 };
 

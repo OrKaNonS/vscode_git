@@ -1,19 +1,19 @@
 {
-  "name": "typescript",
+  "name": "stockmanager",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "stockmanager.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "OrKaNonS",
-  "license": "MIT",
-  "description": "typescript study",
-  "devDependencies": {
-    "typescript": "^5.5.3"
-  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "jquery": "^3.7.1",
     "jsdom": "^24.1.0"
-  }
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9"
+  },
+  "description": ""
 }

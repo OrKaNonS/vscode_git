@@ -1,2 +1,12 @@
 node_modules
 past
+public
+App.test.js
+index.css
+logo.svg
+reportWebVitals.js
+setupTests.js
+package-lock.json
+package.json
+README.md
+index.js

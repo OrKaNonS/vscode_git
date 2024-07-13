@@ -1,50 +1,51 @@
-import DetailProduct from './DetailProduct';
+import { NavLink } from 'react-router-dom';
 import Product from './Product';
-import {Routes, Route} from 'react-router-dom';
 
 const productList = [];
 
 export default function ListProduct() {
+    if (productList.length === 0) {
+    const products = [
+        ['1', '사과', '내가 왕이 될 사과앙(상)인가?', '/img/apple.png', 22000],
+        ['2', '배', '내 배는 음악을 들을 수 있다구!', '/img/pear.png', 22000],
+        ['3', '딸기', '보노보노가 딸기 보노?', '/img/strawberry.png', 22000],
+        ['4', '수박', '한번 잡 수박', '/img/watermelon.png', 22000],
+        ['5', '메론', '메로옹~ 열받으면 손 넣어봐', '/img/melon.png', 22000],
+        ['6', '바나나', '귀여우면 미니언즈에 바나나?', '/img/banana.png', 22000],
+        ['7', '키위', '큰키위 작은키위. ', '/img/kiwi.png', 22000],
+        ['8', '복숭아', '날 찾을 수 있겠나?', '/img/peach.png', 22000]
+    ];
 
-    registProduct(['1', '상품명1', '상품설명1', './img/1.png', 22000]);
-    registProduct(['2', '상품명2', '상품설명2', './img/2.png', 22000]);
-    registProduct(['3', '상품명3', '상품설명3', './img/3.png', 22000]);
-    registProduct(['4', '상품명4', '상품설명4', './img/4.png', 22000]);
-    registProduct(['5', '상품명5', '상품설명5', './img/5.png', 22000]);
-    registProduct(['6', '상품명6', '상품설명6', './img/6.png', 22000]);
-    registProduct(['7', '상품명7', '상품설명7', './img/7.png', 22000]);
-    registProduct(['8', '상품명8', '상품설명8', './img/8.png', 22000]);
+    products.forEach(product => registProduct(product));
 
-    console.log(productList);
+    }
 
     return (
-        <>
-            <div id='listProduct'>
-                <ul>
-                    {productList.map(
-                        (product, index) =>
-                            <li className='productLi' data-index={index} key={index} onClick={DetailProduct}>{DetailProduct}</il>
-                            <img src='{product.state.pimg}' /><br />
+        <div id='listProduct'>
+            <ul>
+                {productList.map((product, idx) => (
+                    <li className='productLi' data-index={idx} key={idx}>
+                        <NavLink to={`/product/${product.state.pno}`}>
+                            <img src={product.state.pimg} alt={product.state.ptitle} /><br />
                             {product.state.ptitle}<br />
-                            {product.state.pprice}                            
-                            </li>
-                    )}
-                </ul>
-            </div>
-            <Routes>
-                <Route path='/:pid' element={<DetailProduct />} />
-            </Routes>
-        </>
+                            {product.state.pprice}원<br />
+                        </NavLink>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-
 }
 
 function registProduct(productArr) {
     const productObj = new Product();
-    productObj.state.pno = productArr[0];
+    productObj.state.pno = parseInt(productArr[0], 10); // pno를 정수로 변환하여 저장
     productObj.state.ptitle = productArr[1];
     productObj.state.pcontent = productArr[2];
     productObj.state.pimg = productArr[3];
     productObj.state.pprice = productArr[4];
     productList.push(productObj);
+    console.log("Product registered:", productObj.state); // 추가된 로그
 }
+
+export { productList };

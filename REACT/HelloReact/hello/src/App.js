@@ -7,7 +7,8 @@
 // import StringReader from "./5-1.StringReader.js"
 // import NumberCounter from "./6-1.NumberCounter";
 // import ReactUseState from "./7.ReactUseState";
-import ReactContextAPI from "./11.ReactContextAPI";
+// import ReactContextAPI from "./11.ReactContextAPI";
+import ReactReducer from "./12.ReactReducer";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
     // <GetData />
     // <ReactLayout />
     // <ReactStyledComponent />
-    <ReactContextAPI />
+    // <ReactContextAPI />
+    <ReactReducer />
   );
 }
 

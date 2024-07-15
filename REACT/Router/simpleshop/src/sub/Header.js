@@ -1,8 +1,7 @@
-import '../css/Header.css';
-export default function Header(props) {
+export default function Header() {
     return (
-        <header>
-            <h1>SimpleShop V0.1</h1>
-        </header>
+        <div id='header'>
+            <h1><a href='/'>SimpleShop v0.1</a></h1>
+        </div>
     );
 }

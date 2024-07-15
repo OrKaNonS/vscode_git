@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import { Component } from 'react';
 
 export default class Product extends Component {
     constructor(props) {
@@ -10,5 +10,6 @@ export default class Product extends Component {
             pimg: '',
             pprice: 0
         };
+        console.log("Product initialized with state:", this.state);
     }
 }
